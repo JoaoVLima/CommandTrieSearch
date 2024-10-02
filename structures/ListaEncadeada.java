@@ -50,7 +50,7 @@ public class ListaEncadeada {
         return valor_removido;
     }
 
-    String remove(int posicao) throws Exception {
+    String remove_posicao(int posicao) throws Exception {
         if (this.is_vazio()){
             throw new Exception("Lista Vazia");
         }
@@ -71,6 +71,32 @@ public class ListaEncadeada {
 
         if (posicao != contador) {
             throw new Exception("Nó na posição " + posicao + " não existe.");
+        }
+
+        String valor_removido = no.direita.info;
+        no.direita = no.direita.direita;
+        return valor_removido;
+    }
+
+    String remove(String valor) throws Exception {
+        if (this.is_vazio()) {
+            throw new Exception("Lista Vazia");
+        }
+
+        Node no = this.inicio;
+
+        if (no.info.equals(valor)) {
+            String valor_removido = no.info;
+            this.inicio = no.direita;
+            return valor_removido;
+        }
+
+        while (no.direita != null && !no.direita.info.equals(valor)) {
+            no = no.direita;
+        }
+
+        if (no.direita == null) {
+            throw new Exception("Nó com valor " + valor + " não encontrado.");
         }
 
         String valor_removido = no.direita.info;
@@ -115,9 +141,9 @@ public class ListaEncadeada {
                 this.insere(valor);
                 this.imprime();
             } else if (opcao == 2) {
-                System.out.print("Digite a posição do nó para excluir: ");
-                int posicao = scanner.nextInt();
-                this.remove(posicao);
+                System.out.print("Digite o valor do nó para excluir: ");
+                String valor = scanner.next();
+                this.remove(valor);
                 this.imprime();
             } else {
                 System.out.println("Opção inválida");
