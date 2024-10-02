@@ -13,7 +13,7 @@ public class ListaEncadeada {
         return (this.inicio == null);
     }
 
-    void insere(int info){
+    void insere(String info){
         Node novo_no = new Node(info);
 
         if (this.is_vazio()){
@@ -29,7 +29,7 @@ public class ListaEncadeada {
         no.direita = novo_no;
     }
 
-    int remove_ultimo() throws Exception {
+    String remove_ultimo() throws Exception {
         if (this.is_vazio()){
             throw new Exception("Lista Vazia");
         }
@@ -37,7 +37,7 @@ public class ListaEncadeada {
         Node no = this.inicio;
 
         if (no.direita == null) {
-            int valor_removido = this.inicio.info;
+            String valor_removido = this.inicio.info;
             this.inicio = null;
             return valor_removido;
         }
@@ -45,18 +45,18 @@ public class ListaEncadeada {
         while(no.direita.direita != null){
             no = no.direita;
         }
-        int valor_removido = no.direita.info;
+        String valor_removido = no.direita.info;
         no.direita = null;
         return valor_removido;
     }
 
-    int remove(int posicao) throws Exception {
+    String remove(int posicao) throws Exception {
         if (this.is_vazio()){
             throw new Exception("Lista Vazia");
         }
 
         if (posicao == 1){
-            int valor_removido = this.inicio.info;
+            String valor_removido = this.inicio.info;
             this.inicio = this.inicio.direita;
             return valor_removido;
         }
@@ -73,7 +73,7 @@ public class ListaEncadeada {
             throw new Exception("Nó na posição " + posicao + " não existe.");
         }
 
-        int valor_removido = no.direita.info;
+        String valor_removido = no.direita.info;
         no.direita = no.direita.direita;
         return valor_removido;
     }
@@ -111,7 +111,7 @@ public class ListaEncadeada {
                 break;
             } else if (opcao == 1) {
                 System.out.print("Digite o valor para inserir: ");
-                int valor = scanner.nextInt();
+                String valor = scanner.next();
                 this.insere(valor);
                 this.imprime();
             } else if (opcao == 2) {
