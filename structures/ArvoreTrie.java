@@ -1,23 +1,26 @@
 package structures;
 
+import java.util.Scanner;
+
 public class ArvoreTrie {
-    private NodeTrie raiz;
+    private NodeTrie inicio;
 
     public ArvoreTrie() {
-        this.raiz = new NodeTrie('\0'); // Nó raiz vazio
+        this.inicio = null;
     }
 
     public void insere(String palavra) {
-        insere_recursivo(this.raiz, palavra.toLowerCase(), 0);
+        insere_recursivo(this.inicio, palavra, 0);
     }
 
-    private void insere_recursivo(NodeTrie noAtual, String palavra, int indice) {
+    private void insere_recursivo(NodeTrie no, String palavra, int indice) {
         if (indice == palavra.length()) {
-            noAtual.isEndOfWord = true; // Marca o final da palavra
+            no.fimDaPalavra = true;
             return;
         }
         char caractere = palavra.charAt(indice);
-        NodeTrie filho = procuraOuCriaFilho(noAtual, caractere);
+
+        NodeTrie filho = procuraOuCriaFilho(no, caractere);
 
         insere_recursivo(filho, palavra, indice + 1);
     }

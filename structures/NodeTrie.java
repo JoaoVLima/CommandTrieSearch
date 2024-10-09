@@ -2,12 +2,12 @@ package structures;
 
 class NodeTrie {
     char info;
-    boolean isEndOfWord;
+    boolean fimDaPalavra;
     ListaEncadeada filhos;
 
     public NodeTrie(char info) {
         this.info = info;
-        this.isEndOfWord = false;
+        this.fimDaPalavra = false;
         this.filhos = new ListaEncadeada();
     }
 }

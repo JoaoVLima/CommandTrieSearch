@@ -3,7 +3,7 @@ package structures;
 import java.util.Scanner;
 
 public class ListaEncadeada {
-    private Node inicio;
+    private NodeTrie inicio;
 
     public ListaEncadeada() {
         this.inicio = null;
@@ -13,15 +13,15 @@ public class ListaEncadeada {
         return (this.inicio == null);
     }
 
-    void insere(String info){
-        Node novo_no = new Node(info);
+    void insere(char info){
+        NodeTrie novo_no = new NodeTrie(info);
 
         if (this.is_vazio()){
             this.inicio = novo_no;
             return;
         }
 
-        Node no = this.inicio;
+        NodeTrie no = this.inicio;
         while(no.direita != null){
             no = no.direita;
         }
@@ -34,7 +34,7 @@ public class ListaEncadeada {
             throw new Exception("Lista Vazia");
         }
 
-        Node no = this.inicio;
+        NodeTrie no = this.inicio;
 
         if (no.direita == null) {
             String valor_removido = this.inicio.info;
@@ -61,7 +61,7 @@ public class ListaEncadeada {
             return valor_removido;
         }
 
-        Node no = this.inicio;
+        NodeTrie no = this.inicio;
 
         int contador = 2;
         while (no.direita.direita != null && contador < posicao) {
@@ -83,7 +83,7 @@ public class ListaEncadeada {
             throw new Exception("Lista Vazia");
         }
 
-        Node no = this.inicio;
+        NodeTrie no = this.inicio;
 
         if (no.info.equals(valor)) {
             String valor_removido = no.info;
@@ -104,6 +104,28 @@ public class ListaEncadeada {
         return valor_removido;
     }
 
+    NodeTrie get(String valor) throws Exception {
+        if (this.is_vazio()) {
+            throw new Exception("Lista Vazia");
+        }
+
+        NodeTrie no = this.inicio;
+
+        if (no.info.equals(valor)) {
+            return no;
+        }
+
+        while (no.direita != null && !no.direita.info.equals(valor)) {
+            no = no.direita;
+        }
+
+        if (no.direita == null) {
+            throw new Exception("Nó com valor " + valor + " não encontrado.");
+        }
+
+        return no.direita;
+    }
+
     void imprime() {
         System.out.print("[");
 
@@ -112,7 +134,7 @@ public class ListaEncadeada {
             return;
         }
 
-        Node no = this.inicio;
+        NodeTrie no = this.inicio;
         while(no != null){
             System.out.print(no.info);
             no = no.direita;
