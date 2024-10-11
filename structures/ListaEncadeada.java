@@ -29,7 +29,7 @@ public class ListaEncadeada {
         no.irmao = novo_no;
     }
 
-    String remove_ultimo() throws Exception {
+    char remove_ultimo() throws Exception {
         if (this.is_vazio()){
             throw new Exception("Lista Vazia");
         }
@@ -37,7 +37,7 @@ public class ListaEncadeada {
         Node no = this.inicio;
 
         if (no.irmao == null) {
-            String valor_removido = this.inicio.info;
+            char valor_removido = this.inicio.info;
             this.inicio = null;
             return valor_removido;
         }
@@ -45,18 +45,18 @@ public class ListaEncadeada {
         while(no.irmao.irmao != null){
             no = no.irmao;
         }
-        String valor_removido = no.irmao.info;
+        char valor_removido = no.irmao.info;
         no.irmao = null;
         return valor_removido;
     }
 
-    String remove_posicao(int posicao) throws Exception {
+    char remove_posicao(int posicao) throws Exception {
         if (this.is_vazio()){
             throw new Exception("Lista Vazia");
         }
 
         if (posicao == 1){
-            String valor_removido = this.inicio.info;
+            char valor_removido = this.inicio.info;
             this.inicio = this.inicio.irmao;
             return valor_removido;
         }
@@ -73,25 +73,25 @@ public class ListaEncadeada {
             throw new Exception("Nó na posição " + posicao + " não existe.");
         }
 
-        String valor_removido = no.irmao.info;
+        char valor_removido = no.irmao.info;
         no.irmao = no.irmao.irmao;
         return valor_removido;
     }
 
-    String remove(String valor) throws Exception {
+    char remove(char valor) throws Exception {
         if (this.is_vazio()) {
             throw new Exception("Lista Vazia");
         }
 
         Node no = this.inicio;
 
-        if (no.info.equals(valor)) {
-            String valor_removido = no.info;
+        if (no.info == valor) {
+            char valor_removido = no.info;
             this.inicio = no.irmao;
             return valor_removido;
         }
 
-        while (no.irmao != null && !no.irmao.info.equals(valor)) {
+        while (no.irmao != null && !(no.irmao.info == valor)) {
             no = no.irmao;
         }
 
@@ -99,23 +99,23 @@ public class ListaEncadeada {
             throw new Exception("Nó com valor " + valor + " não encontrado.");
         }
 
-        String valor_removido = no.irmao.info;
+        char valor_removido = no.irmao.info;
         no.irmao = no.irmao.irmao;
         return valor_removido;
     }
 
-    Node get(String valor) throws Exception {
+    Node get(char valor) throws Exception {
         if (this.is_vazio()) {
             throw new Exception("Lista Vazia");
         }
 
         Node no = this.inicio;
 
-        if (no.info.equals(valor)) {
+        if (no.info == valor) {
             return no;
         }
 
-        while (no.irmao != null && !no.irmao.info.equals(valor)) {
+        while (no.irmao != null && !(no.irmao.info == valor)) {
             no = no.irmao;
         }
 
@@ -160,12 +160,12 @@ public class ListaEncadeada {
             } else if (opcao == 1) {
                 System.out.print("Digite o valor para inserir: ");
                 String valor = scanner.next();
-                this.insere(valor);
+                this.insere(valor.charAt(0));
                 this.imprime();
             } else if (opcao == 2) {
                 System.out.print("Digite o valor do nó para excluir: ");
                 String valor = scanner.next();
-                this.remove(valor);
+                this.remove(valor.charAt(0));
                 this.imprime();
             } else {
                 System.out.println("Opção inválida");
