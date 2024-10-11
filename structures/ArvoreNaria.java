@@ -4,17 +4,30 @@ public class ArvoreNaria {
     private Node inicio;
 
     public ArvoreNaria() {
-        this.inicio = null;
+        this.inicio = new Node(' ');
     }
 
     boolean is_vazio() {
         return (this.inicio == null);
     }
 
-    boolean inserir(char info){
-        if(this.is_vazio()){
+    boolean inserir(String word){
+        char[] chars = word.toCharArray();
 
+        Node novo_no = new Node(chars[0]);
+
+        if(this.is_vazio()){
+            this.inicio = novo_no;
+            return true;
         }
+
+        Node no = this.inicio;
+        while(no.irmao != null){
+            no = no.irmao;
+        }
+
+        no.irmao = novo_no;
+        return true;
     }
 
     public boolean inserirNo(int valor, int paiValor) {
