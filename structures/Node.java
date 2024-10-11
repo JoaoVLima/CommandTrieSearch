@@ -1,11 +1,13 @@
 package structures;
 
 class Node {
-    protected String info;
-    protected Node esquerda;
-    protected Node direita;
+    protected char info;
+    protected Boolean fimDaPalavra;
+    protected Node filho;
+    protected Node irmao;
 
-    public Node(String info){
+    public Node(char info){
         this.info = info;
+        this.fimDaPalavra = false;
     }
 }
