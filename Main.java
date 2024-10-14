@@ -1,8 +1,9 @@
-import structures.ListaEncadeada;
+import structures.ArvoreNaria;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        ListaEncadeada lista = new ListaEncadeada();
-        lista.menu();
+        ArvoreNaria arvore = new ArvoreNaria();
+        arvore.insere("AR");
+        System.out.println();
     }
 }
