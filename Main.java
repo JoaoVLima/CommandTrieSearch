@@ -1,8 +1,8 @@
-import structures.ArvoreNaria;
+import structures.ArvoreTrie;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        ArvoreNaria arvore = new ArvoreNaria();
+        ArvoreTrie arvore = new ArvoreTrie();
         arvore.insere("AR");
         System.out.println();
     }

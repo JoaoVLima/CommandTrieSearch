@@ -1,160 +1,145 @@
-//package structures;
+package structures;
+
+public class ArvoreTrie {
+    private Node inicio;
+
+    public ArvoreTrie() {
+        this.inicio = null;
+    }
+
+    public boolean insere(String word){
+        char[] chars = word.toCharArray();
+        int indice = 0;
+
+        this.inicio = insere_recursivo(this.inicio, chars, indice);
+
+        return true;
+    }
+
+    Node insere_recursao(Node no, String info){
+        if(no == null){
+            no = new Node(info);
+            return no;
+        }
+        if (info.compareTo(no.info) < 0) {
+            no.esquerda = insere_recursao(no.esquerda, info);
+        } else {
+            no.direita = insere_recursao(no.direita, info);
+        }
+        return no;
+    }
+
+
+    public Node insere_recursivo(Node no, char[] chars, int indice){
+        if(indice == chars.length){
+            return;
+        }
+
+        Node no_buscado = no.busca_irmao(chars[indice]);
+        if(no_buscado == null){
+            no.adiciona_irmao(chars[indice]);
+        }
+
+        indice++;
+        insere_recursivo(no.filho, chars, indice);
+    }
 //
-//import java.util.Scanner;
-//
-//public class ArvoreTrie {
-//    private NodeTrie inicio;
-//
-//    public ArvoreTrie() {
-//        this.inicio = null;
-//    }
-//
-//    public void insere(String palavra) {
-//        insere_recursivo(this.inicio, palavra, 0);
-//    }
-//
-//    private void insere_recursivo(NodeTrie no, String palavra, int indice) {
-//        if (indice == palavra.length()) {
-//            no.fimDaPalavra = true;
-//            return;
-//        }
-//        char caractere = palavra.charAt(indice);
-//
-//        NodeTrie filho = procuraOuCriaFilho(no, caractere);
-//
-//        insere_recursivo(filho, palavra, indice + 1);
-//    }
-//
-//    private NodeTrie procuraOuCriaFilho(NodeTrie no, char caractere) {
-//        Node noLista = no.filhos.get_inicio();
-//        while (noLista != null) {
-//            NodeTrie filho = (NodeTrie) noLista.info;
-//            if (filho.info == caractere) {
-//                return filho;
-//            }
-//            noLista = noLista.direita;
-//        }
-//
-//        NodeTrie novoFilho = new NodeTrie(caractere);
-//        no.filhos.insere(novoFilho);
-//        return novoFilho;
-//    }
-//
-//    public boolean busca(String palavra) {
-//        return busca_recursivo(this.raiz, palavra.toLowerCase(), 0);
-//    }
-//
-//    private boolean busca_recursivo(NodeTrie noAtual, String palavra, int indice) {
-//        if (indice == palavra.length()) {
-//            return noAtual.isEndOfWord;
-//        }
-//
-//        char caractere = palavra.charAt(indice);
-//        NodeTrie filho = procuraFilho(noAtual, caractere);
-//
-//        if (filho == null) {
+//    public boolean inserirNo(int valor, int paiValor) {
+//        No pai = buscarNo(paiValor, this.inicio);
+//        if (pai == null) {
+//            System.out.println("Pai não encontrado.");
 //            return false;
 //        }
 //
-//        return busca_recursivo(filho, palavra, indice + 1);
+//        No novoNo = new No(valor);
+//        novoNo.setPai(pai);
+//
+//        if (pai.getPrimeiroFilho() == null) {
+//            pai.setPrimeiroFilho(novoNo);
+//            System.out.println("Nó inserido com sucesso.");
+//            return true;
+//        } else {
+//            No aux = pai.getPrimeiroFilho();
+//            while (aux.getProximoIrmao() != null) {
+//                aux = aux.getProximoIrmao();
+//            }
+//            aux.setProximoIrmao(novoNo);
+//            System.out.println("Nó inserido com sucesso.");
+//            return true;
+//        }
 //    }
 //
-//    private NodeTrie procuraFilho(NodeTrie no, char caractere) {
-//        Node noLista = no.filhos.get_inicio();
-//        while (noLista != null) {
-//            NodeTrie filho = (NodeTrie) noLista.info;
-//            if (filho.info == caractere) {
-//                return filho;
+//    public No buscarNo(int valor, No inicio) {
+//        if (this.inicio == null) {
+//            return null;
+//        } else if (this.inicio.getValor() == valor) {
+//            System.out.println("Nó encontrado.");
+//            return this.inicio;
+//        }
+//
+//        No aux = this.inicio.getPrimeiroFilho();
+//        while (aux != null) {
+//            No no = buscarNo(valor, aux);
+//            if (no != null) {
+//                return no;
 //            }
-//            noLista = noLista.direita;
+//            aux = aux.getProximoIrmao();
 //        }
 //        return null;
 //    }
 //
-//    public void remove(String palavra) {
-//        remove_recursivo(this.raiz, palavra.toLowerCase(), 0);
+//    public void exibirArvore(No inicio) {
+//        if (this.inicio == null) {
+//            return;
+//        }
+//
+//        System.out.print(this.inicio.getValor() + "(");
+//        No aux = this.inicio.getPrimeiroFilho();
+//        while (aux != null) {
+//            exibirArvore(aux);
+//            aux = aux.getProximoIrmao();
+//        }
+//        System.out.print(")");
 //    }
 //
-//    private boolean remove_recursivo(NodeTrie noAtual, String palavra, int indice) {
-//        if (indice == palavra.length()) {
-//            if (!noAtual.isEndOfWord) {
-//                return false; // Palavra não encontrada
+//    public boolean removerNo(int valor) {
+//        No no = buscarNo(valor, this.inicio);
+//        if (no == null) {
+//            System.out.println("Nó não encontrado.");
+//            return false;
+//        }
+//
+//        No pai = no.getPai();
+//        No primeiroFilho = no.getPrimeiroFilho();
+//        No proximoIrmao = no.getProximoIrmao();
+//
+//        if (pai != null) {
+//            if (pai.getPrimeiroFilho() == no) {
+//                pai.setPrimeiroFilho(proximoIrmao);
+//            } else {
+//                No aux = pai.getPrimeiroFilho();
+//                while (aux.getProximoIrmao() != no) {
+//                    aux = aux.getProximoIrmao();
+//                }
+//                aux.setProximoIrmao(proximoIrmao);
 //            }
-//            noAtual.isEndOfWord = false;
-//            return noAtual.filhos.is_vazio(); // Se não tem filhos, pode remover
-//        }
 //
-//        char caractere = palavra.charAt(indice);
-//        NodeTrie filho = procuraFilho(noAtual, caractere);
-//
-//        if (filho == null) {
-//            return false; // Palavra não encontrada
-//        }
-//
-//        boolean deveRemoverFilho = remove_recursivo(filho, palavra, indice + 1);
-//
-//        if (deveRemoverFilho) {
-//            noAtual.filhos.remove(filho); // Remove o filho da lista de filhos
-//            return noAtual.filhos.is_vazio() && !noAtual.isEndOfWord; // Se não tem filhos e não é fim de palavra, pode remover
-//        }
-//
-//        return false;
-//    }
-//
-//    public void imprime() {
-//        imprime_recursivo(this.raiz, "");
-//    }
-//
-//    private void imprime_recursivo(NodeTrie noAtual, String prefixo) {
-//        if (noAtual.isEndOfWord) {
-//            System.out.println(prefixo);
-//        }
-//
-//        Node noLista = noAtual.filhos.get_inicio();
-//        while (noLista != null) {
-//            NodeTrie filho = (NodeTrie) noLista.info;
-//            imprime_recursivo(filho, prefixo + filho.info);
-//            noLista = noLista.direita;
-//        }
-//    }
-//
-//    public void menu() {
-//        Scanner scanner = new Scanner(System.in);
-//        while (true) {
-//            System.out.println("1 - Inserir palavra");
-//            System.out.println("2 - Buscar palavra");
-//            System.out.println("3 - Remover palavra");
-//            System.out.println("4 - Imprimir Trie");
-//            System.out.println("0 - Sair");
-//
-//            int opcao = scanner.nextInt();
-//            scanner.nextLine(); // Limpa buffer
-//
-//            switch (opcao) {
-//                case 1:
-//                    System.out.print("Digite a palavra para inserir: ");
-//                    String palavraInserir = scanner.nextLine();
-//                    insere(palavraInserir);
-//                    break;
-//                case 2:
-//                    System.out.print("Digite a palavra para buscar: ");
-//                    String palavraBuscar = scanner.nextLine();
-//                    boolean encontrado = busca(palavraBuscar);
-//                    System.out.println(encontrado ? "Palavra encontrada!" : "Palavra não encontrada.");
-//                    break;
-//                case 3:
-//                    System.out.print("Digite a palavra para remover: ");
-//                    String palavraRemover = scanner.nextLine();
-//                    remove(palavraRemover);
-//                    break;
-//                case 4:
-//                    imprime();
-//                    break;
-//                case 0:
-//                    return;
-//                default:
-//                    System.out.println("Opção inválida.");
+//            if (primeiroFilho != null) {
+//                No aux = pai.getPrimeiroFilho();
+//                if (aux == null) {
+//                    proximoIrmao.setPrimeiroFilho(primeiroFilho);
+//                } else {
+//                    while (aux.getProximoIrmao() != null) {
+//                        aux = aux.getProximoIrmao();
+//                    }
+//                    aux.setProximoIrmao(primeiroFilho);
+//                }
 //            }
+//        } else {
+//            this.inicio = primeiroFilho;
 //        }
+//
+//        no = null;
+//        return true;
 //    }
-//}
+}
