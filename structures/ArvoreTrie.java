@@ -11,38 +11,77 @@ public class ArvoreTrie {
         char[] chars = word.toCharArray();
         int indice = 0;
 
-        this.inicio = insere_recursivo(this.inicio, chars, indice);
+        this.inicio = insere_recursao(this.inicio, chars, indice);
 
         return true;
     }
 
-    Node insere_recursao(Node no, String info){
-        if(no == null){
-            no = new Node(info);
+    private Node insere_recursao(Node no, char[] chars, int indice) {
+        if (indice == chars.length) {
+            if (no != null) {
+                no.fimDaPalavra = true;
+            }
             return no;
         }
-        if (info.compareTo(no.info) < 0) {
-            no.esquerda = insere_recursao(no.esquerda, info);
-        } else {
-            no.direita = insere_recursao(no.direita, info);
+
+        if (no == null) {
+            no = new Node(chars[indice]);
         }
+
+        if (no.info == chars[indice]) {
+            no.filho = insere_recursao(no.filho, chars, indice+1);
+
+            if (indice == chars.length-1) {
+                no.fimDaPalavra = true;
+            }
+        }
+        else {
+            no.irmao = insere_recursao(no.irmao, chars, indice);
+        }
+
         return no;
     }
 
 
-    public Node insere_recursivo(Node no, char[] chars, int indice){
-        if(indice == chars.length){
-            return;
-        }
+    public boolean remove(String word){
+        char[] chars = word.toCharArray();
+        int indice = 0;
 
-        Node no_buscado = no.busca_irmao(chars[indice]);
-        if(no_buscado == null){
-            no.adiciona_irmao(chars[indice]);
-        }
-
-        indice++;
-        insere_recursivo(no.filho, chars, indice);
+        return remove_recursao(this.inicio, chars, indice);
     }
+
+    private boolean remove_recursao(Node no, char[] chars, int indice) {
+        if (no == null) {
+            return false;
+        }
+
+        if (indice == chars.length) {
+            if (no.fimDaPalavra) {
+                no.fimDaPalavra = false;
+                return no.filho == null && no.irmao == null;
+            }
+            return false;
+        }
+
+        if (no.info == chars[indice]) {
+            boolean is_remove = remove_recursao(no.filho, chars, indice + 1);
+
+            if (is_remove) {
+                no.filho = null;
+
+                return !no.fimDaPalavra && no.irmao == null;
+            }
+        } else {
+            boolean is_remove = remove_recursao(no.irmao, chars, indice);
+
+            if (is_remove) {
+                no.irmao = null;
+            }
+        }
+
+        return false;
+    }
+
 //
 //    public boolean inserirNo(int valor, int paiValor) {
 //        No pai = buscarNo(paiValor, this.inicio);
