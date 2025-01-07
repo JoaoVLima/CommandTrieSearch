@@ -5,8 +5,11 @@ public class Main {
         ArvoreTrie arvore = new ArvoreTrie();
         arvore.insere("AR");
         arvore.insere("OBA");
+        arvore.insere("OBO");
         arvore.insere("OK");
-        arvore.remove("AR");
+        arvore.insere("OKO");
+        // arvore.remove("AR");
+        arvore.exibir();
         System.out.println();
     }
 }
