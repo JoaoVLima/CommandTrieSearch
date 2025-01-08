@@ -81,7 +81,22 @@ public class ArvoreTrie {
         return false;
     }
 
-    public void exibir() {
+    public boolean exibir(){
+        this.inicio = exibir_recursao(this.inicio, new String[10], 0);
+        return true;
+    }
 
+    private Node exibir_recursao(Node no, String[] words, int indice) {
+        if (no == null) {
+            return no;
+        }
+
+        
+
+        no.filho = exibir_recursao(no.filho, words, indice);
+
+        no.irmao = exibir_recursao(no.irmao, words, indice);
+
+        return no;
     }
 }
