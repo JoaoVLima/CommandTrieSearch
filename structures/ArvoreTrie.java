@@ -81,21 +81,27 @@ public class ArvoreTrie {
         return false;
     }
 
-    public boolean exibir(){
-        this.inicio = exibir_recursao(this.inicio, new String[10], 0);
+    public boolean exibir() {
+        this.inicio = exibir_recursao(this.inicio, new StringBuilder());
         return true;
     }
 
-    private Node exibir_recursao(Node no, String[] words, int indice) {
+    private Node exibir_recursao(Node no, StringBuilder palavra) {
         if (no == null) {
             return no;
         }
 
-        
+        palavra.append(no.info);
 
-        no.filho = exibir_recursao(no.filho, words, indice);
+        if (no.fimDaPalavra) {
+            System.out.println(palavra);
+        }
 
-        no.irmao = exibir_recursao(no.irmao, words, indice);
+        exibir_recursao(no.filho, palavra);
+
+        palavra.deleteCharAt(palavra.length() - 1);
+
+        exibir_recursao(no.irmao, palavra);
 
         return no;
     }
